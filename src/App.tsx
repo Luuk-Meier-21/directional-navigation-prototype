@@ -1,14 +1,5 @@
-import hotkeys from "hotkeys-js";
 import "./App.css";
-import FocusGroup from "./components/FocusGroup/FocusGroup";
-import {
-  ElementType,
-  ReactNode,
-  createContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import {useState} from "react";
 import {useHotkeys} from "./utils/hotkeys";
 
 const IPSEM_LONG =

@@ -1,4 +1,4 @@
-import {ElementRef, ElementType, ReactNode, createContext, useRef} from "react";
+import {ElementRef, ElementType, ReactNode, useRef} from "react";
 import {useHotkeys} from "../../utils/hotkeys";
 import {AsElementProps} from "../../types/as-element";
 import AriaBlock from "../AriaBlock/AriaBlock";
@@ -18,7 +18,7 @@ function FocusGroup<T extends ElementType>({
 }: FocusGroupProps<T>) {
   const ref = useRef<ElementRef<"button">>(null);
 
-  useHotkeys(hotkey, (event, handler) => {
+  useHotkeys(hotkey, (event) => {
     event.preventDefault();
 
     ref.current?.focus();
