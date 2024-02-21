@@ -1,6 +1,7 @@
 import "./App.css";
 import {useState} from "react";
 import {useHotkeys} from "./utils/hotkeys";
+import {useSearchParams} from "./utils/search-params";
 
 const IPSEM_LONG =
   "Inderdaad, ik ken vele mensen, die nogal ophebben met hun Amsterdamse neven, vooral als ze tot 'Lezers in Felix behoren, of als ze een rijtuig houden; maar ik heb dikwijls verbaasd gestaan over mijn verregaande koelheid omtrent de persoon van mijn neef Nurks; en niets verschrikkelijker, dan wanneer hij mij zaterdagmiddag per diligence een steen stond met een brief er aan, inhoudende dat hij (mits het weer goedbleef en er niet, maar dat kwam er nooit, het een of ander in de weg kwam) met mij de dag in de Haarlemmerhout zou komen doorbrengen; niet dat ik iets tegen het gemelde bos heb, maar wel tegen ZEd.";
@@ -8,6 +9,10 @@ const IPSUM =
   "Onbegrijpelijk veel mensen hebben familiebetrekkingen, vrienden of kennissen te Amsterdam. Het is een verschijnsel dat ik eenvoudig toeschrijf aan de veelheid der inwoners van die hoofdstad. Ik had er voor een paar jaren nog een verre neef. Waar hij nu is, weet ik niet. Ik geloof dat hij naar de West gegaan is. Misschien heeft de een of ander van mijn lezers hem wel brieven meegegeven.";
 
 function App() {
+  const [params] = useSearchParams();
+
+  console.log(params);
+
   const [tab, setCurrentTabs] = useState([0, 0]);
 
   const openMenu = () => {
@@ -21,6 +26,10 @@ function App() {
   const leaveDocument = () => {
     alert("Je hebt het document verlaten!");
   };
+
+  const hotkeyMenu = params.menu || "m";
+  const hotkeyMain = params.main || "space";
+  const hotkeyLeave = params.leave || "f";
 
   const focusElement = (element: HTMLOrSVGElement | null) => {
     if (element == null) {
@@ -44,11 +53,9 @@ function App() {
   const min = 1;
   const max = 5;
 
-  useHotkeys("m", openMenu);
-
-  useHotkeys("f", leaveDocument);
-
-  useHotkeys("space", toMainContent);
+  useHotkeys(hotkeyMenu, openMenu);
+  useHotkeys(hotkeyMain, toMainContent);
+  useHotkeys(hotkeyLeave, leaveDocument);
 
   useHotkeys("up", () => focusElement(document.getElementById("nav")));
   useHotkeys("down", () => focusElement(document.getElementById("footer")));
@@ -99,19 +106,19 @@ function App() {
           className="focus:text-red-500 focus:outline-none"
           onClick={openMenu}
         >
-          Ga naar het menu, sneltoets: "M"
+          Ga naar het menu, sneltoets: "{hotkeyMenu}"
         </button>
         <button
           className="focus:text-red-500 focus:outline-none"
           onClick={toMainContent}
         >
-          Ga naar de inhoud, sneltoets: "spatie"
+          Ga naar de inhoud, sneltoets: "{hotkeyMain}"
         </button>
         <button
           className="focus:text-red-500 focus:outline-none"
           onClick={leaveDocument}
         >
-          Verlaat dit document, sneltoets: "F"
+          Verlaat dit document, sneltoets: "{hotkeyLeave}"
         </button>
       </div>
       <div className="h-screen grid  grid-rows-[auto,1fr,auto]">
@@ -135,7 +142,7 @@ function App() {
           <aside
             tabIndex={0}
             data-tab-id="5-1"
-            aria-label={"Mijn mening"}
+            aria-label="Mijn mening"
             className="text-center focus:bg-red-300 ring-1 ring-red-200 flex flex-col py-5 items-center justify-center focus:outline-none"
             onFocus={() => setCurrentTabs([5, 1])}
           >
