@@ -2,6 +2,7 @@ import "./App.css";
 import {useState} from "react";
 import {useHotkeys} from "./utils/hotkeys";
 import {useSearchParams} from "./utils/search-params";
+import clsx from "clsx";
 
 const IPSEM_LONG =
   "Inderdaad, ik ken vele mensen, die nogal ophebben met hun Amsterdamse neven, vooral als ze tot 'Lezers in Felix behoren, of als ze een rijtuig houden; maar ik heb dikwijls verbaasd gestaan over mijn verregaande koelheid omtrent de persoon van mijn neef Nurks; en niets verschrikkelijker, dan wanneer hij mij zaterdagmiddag per diligence een steen stond met een brief er aan, inhoudende dat hij (mits het weer goedbleef en er niet, maar dat kwam er nooit, het een of ander in de weg kwam) met mij de dag in de Haarlemmerhout zou komen doorbrengen; niet dat ik iets tegen het gemelde bos heb, maar wel tegen ZEd.";
@@ -30,6 +31,7 @@ function App() {
   const hotkeyMenu = params.menu || "m";
   const hotkeyMain = params.main || "space";
   const hotkeyLeave = params.leave || "f";
+  const blind = params.blind ? true : false;
 
   const focusElement = (element: HTMLOrSVGElement | null) => {
     if (element == null) {
@@ -91,8 +93,12 @@ function App() {
     );
   };
 
+  const classes = clsx({
+    "bg-black [&>*]:opacity-0": blind,
+  });
+
   return (
-    <>
+    <div className={classes}>
       <div className="absolute left-0 right-0">
         <h1
           aria-label="Document"
@@ -205,7 +211,7 @@ function App() {
           </ul>
         </footer>
       </div>
-    </>
+    </div>
   );
 }
 
