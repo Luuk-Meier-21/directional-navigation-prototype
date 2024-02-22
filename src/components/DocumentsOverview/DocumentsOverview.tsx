@@ -191,11 +191,11 @@ function DocumentsOverview({}: DocumentsOverviewProps) {
 
             return (
               <li key={i}>
-                <button
+                <a
                   id={`document-${0}`}
                   aria-labelledby={id}
+                  href="/document"
                   className="flex flex-col text-left focus:bg-red-300 focus:outline-none ring-1 ring-red-300"
-                  aria-live="polite"
                 >
                   <h2 id={id} className="font-bold">
                     {document.title}
@@ -210,7 +210,7 @@ function DocumentsOverview({}: DocumentsOverviewProps) {
                       </li>
                     ))}
                   </ul>
-                </button>
+                </a>
               </li>
             );
           })
